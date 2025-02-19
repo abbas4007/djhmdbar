@@ -95,12 +95,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'kanoon',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'USER': 'root',
+        'PASSWORD': 'xUli1dghynY4ztz8u9R0ApeY',
+        'HOST': 'annapurna.liara.cloud',
+        'PORT': '31909',
     }
 }
+
 
 # DATABASES = {
 #     'default': {
