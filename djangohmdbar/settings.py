@@ -94,7 +94,7 @@ WSGI_APPLICATION = 'djangohmdbar.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'hmd',
+        # 'NAME': 'hmd',
         'USER': 'root',
         'PASSWORD': 'xUli1dghynY4ztz8u9R0ApeY',
         'HOST': 'annapurna.liara.cloud',
