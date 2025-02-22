@@ -161,7 +161,7 @@ class MessageUpdateView(LoginRequiredMixin, UpdateView) :
                 else :
                     print("پیامک با موفقیت ارسال شد!")
 
-            except Exception as e:
+            except Exception as e :
                 print(f"خطا در ارسال پاسخ: {str(e)}")
 
         return response
