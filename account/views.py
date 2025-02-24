@@ -24,6 +24,8 @@ from django.http import JsonResponse
 from captcha.models import CaptchaStore
 from .models import ContactMessage
 from utils import send_sms
+from django.db.models import Max
+
 # Create your views here.
 
 
@@ -349,11 +351,24 @@ class CategoryListView(ListView):
     template_name = 'account/category_list.html'
     context_object_name = 'categories'
 
-class CategoryCreateView(CreateView):
+
+class CategoryCreateView(CreateView) :
     model = Category
     form_class = CategoryForm
     template_name = 'account/category_form.html'
     success_url = reverse_lazy('account:category_list')
+
+    def form_valid(self, form) :
+        # تعیین position خودکار برای دستههای ریشه
+        last_position = Category.objects.filter(
+            parent__isnull = True
+        ).aggregate(Max('position'))['position__max']
+
+        if last_position is not None :
+            form.instance.position = last_position + 1
+        else :
+            form.instance.position = 1
+        return super().form_valid(form)
 
 class CategoryUpdateView(UpdateView):
     model = Category
