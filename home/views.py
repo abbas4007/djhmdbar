@@ -156,13 +156,25 @@ class UploadExcelView(LoginRequiredMixin, View) :
 
         return redirect('home:upload_excel')
 
-class VokalaView(View):
+
+class VokalaView(View) :
     form_class = VakilSearchForm
-    def get(self,request):
+
+    def get(self, request) :
+        form = self.form_class(request.GET)
         vakils = Vakil.objects.all()
-        if request.GET.get('search') :
-            vakils = vakils.filter(name__contains = request.GET['search'])
-        return render(request,'home/vokala.html',{'vakils':vakils,'form':self.form_class})
+
+        search_term = request.GET.get('search')
+        if search_term :
+            vakils = vakils.filter(
+                Q(name__icontains = search_term) |
+                Q(lastname__icontains = search_term)
+            )
+
+        return render(request, 'home/vokala.html', {
+            'vakils' : vakils,
+            'form' : form
+        })
 
 class ArticlePreview(DetailView):
     def get_object(self):
