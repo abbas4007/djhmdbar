@@ -1,6 +1,6 @@
 # forms.py
 from django import forms
-from home.models import Vakil, ArticleFile, Comision, Article, Riyasat
+from home.models import Vakil, ArticleFile, Comision, Article, Riyasat, Category
 from tinymce.widgets import TinyMCE
 from django import forms
 from .models import ContactMessage
@@ -97,3 +97,8 @@ class VakilForm(forms.ModelForm):
         model = Vakil
         fields = '__all__'
         exclude = ['city_slug']
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ['title', ]

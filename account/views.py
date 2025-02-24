@@ -1,3 +1,5 @@
+import os
+
 from django.contrib import messages
 from django.contrib.auth.views import LoginView
 from django.db.models import Q
@@ -11,8 +13,8 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-from home.models import Article, Vakil, Riyasat, ArticleImage, ArticleFile,Comision
-from .forms import ImageForm, ComisionForm, RaeesForm
+from home.models import Article, Vakil, Riyasat, ArticleImage, ArticleFile, Comision, Category
+from .forms import ImageForm, ComisionForm, RaeesForm, CategoryForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from .forms import ContactForm
@@ -22,7 +24,6 @@ from django.http import JsonResponse
 from captcha.models import CaptchaStore
 from .models import ContactMessage
 from utils import send_sms
-
 # Create your views here.
 
 
@@ -173,7 +174,7 @@ class CustomLoginView(LoginView):
 
 class ArticleList(LoginRequiredMixin, ListView) :  # اضافه کردن LoginRequiredMixin
     model = Article
-    paginate_by = 6
+    paginate_by = 10
     template_name = "account/home.html"
 
 
@@ -342,3 +343,42 @@ def comision_delete(request, pk):
         commission.delete()
         return redirect('account:comision')  # بعد از حذف به لیست کمیسیون‌ها برگردید
     return render(request, 'account/comision_confirm_delete.html', {'commission': commission})
+
+class CategoryListView(ListView):
+    model = Category
+    template_name = 'account/category_list.html'
+    context_object_name = 'categories'
+
+class CategoryCreateView(CreateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = 'account/category_form.html'
+    success_url = reverse_lazy('account:category_list')
+
+class CategoryUpdateView(UpdateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = 'account/category_form.html'
+    success_url = reverse_lazy('account:category_list')
+
+class CategoryDeleteView(DeleteView):
+    model = Category
+    template_name = 'account/category_confirm_delete.html'
+    success_url = reverse_lazy('account:category_list')
+
+@csrf_exempt
+def upload_image(request):
+    if request.method == 'POST' and request.FILES.get('file'):
+        uploaded_file = request.FILES['file']
+        # ایجاد پوشه‌ی uploads اگر وجود نداشته باشد
+        upload_dir = os.path.join(settings.MEDIA_ROOT, 'uploads')
+        os.makedirs(upload_dir, exist_ok=True)
+        # ذخیره فایل
+        file_path = os.path.join(upload_dir, uploaded_file.name)
+        with open(file_path, 'wb+') as destination:
+            for chunk in uploaded_file.chunks():
+                destination.write(chunk)
+        # بازگرداندن URL فایل ذخیره‌شده
+        file_url = os.path.join(settings.MEDIA_URL, 'uploads', uploaded_file.name)
+        return JsonResponse({'location': file_url})
+    return JsonResponse({'error': 'Invalid request'}, status=400)

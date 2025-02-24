@@ -12,8 +12,9 @@ from .views import (
     Riyasatlist,
     vakil_image_view,
     add_comision,
-    ComisionDetail, CustomLoginView, ComisionView, VakilUpdateView, VakilDeleteView, RiyasatDeleteView,
-    add_riyasat, comision_edit, comision_delete, contact_view,success_page,MessageUpdateView,MessageListView
+    ComisionDetail, CustomLoginView, ComisionView, VakilUpdateView, VakilDeleteView, RiyasatDeleteView,CategoryListView,CategoryCreateView,
+    add_riyasat, comision_edit, comision_delete, contact_view,success_page,MessageUpdateView,MessageListView,CategoryUpdateView,CategoryDeleteView,
+upload_image
 )
 
 
@@ -34,12 +35,18 @@ urlpatterns = [
     path('article/update/<int:pk>', ArticleUpdate.as_view(), name="article_update"),
 	path('article/delete/<int:pk>', ArticleDelete.as_view(), name="article_delete"),
     path('image_upload/<int:id>', vakil_image_view.as_view(), name = 'image_upload'),
+    path('article/upload_image/', upload_image, name='upload_image'),
     path('login/', CustomLoginView.as_view(), name = 'login'),
     path('comision/edit/<int:pk>/', comision_edit, name='comision_edit'),
     path('comision/delete/<int:pk>/', comision_delete, name='comision_delete'),
     path('riyasat/delete/<int:pk>/', RiyasatDeleteView.as_view(), name = 'riyasat_delete'),
+    path('categories/', CategoryListView.as_view(), name = 'category_list'),
+    path('categories/add/', CategoryCreateView.as_view(), name = 'category_add'),
+    path('categories/edit/<int:pk>/', CategoryUpdateView.as_view(), name = 'category_edit'),
+    path('categories/delete/<int:pk>/', CategoryDeleteView.as_view(), name = 'category_delete'),
     path('contact/', contact_view, name = 'contact'),
     path('contact/success/', success_page, name = 'success_page'),
     path('messages/', MessageListView.as_view(), name = 'message_list'),
     path('admin/messages/<int:pk>/', MessageUpdateView.as_view(), name = 'message_update')
-    ]
+
+]

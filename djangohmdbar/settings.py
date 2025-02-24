@@ -169,7 +169,7 @@ AUTH_USER_MODEL = 'account.User'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
-
+DATA_UPLOAD_MAX_MEMORY_SIZE=5242880
 TINYMCE_DEFAULT_CONFIG = {
     'theme': 'silver',
     'plugins': 'directionality lists link image code', # افزودن پلاگین directionality
@@ -178,7 +178,10 @@ TINYMCE_DEFAULT_CONFIG = {
     'directionality': 'rtl', # راست‌چین پیش‌فرض
     'font_formats': 'Sahel=Sahel, sans-serif;', # افزودن فونت به لیست
     'font_family': 'Sahel', # فونت پیش‌فرض
-'rtl_ui': True,
+    'rtl_ui': True,
+    'plugins' : 'image',
+    'toolbar' : 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+    'images_upload_url': '/account/article/upload_image/',  # آدرس کامل URL برای آپلود عکس
 }
 
 # تنظیمات قاصدک
