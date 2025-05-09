@@ -30,6 +30,7 @@ openpyxl==3.1.5
 packaging==24.2
 pandas==2.2.3
 pillow==10.2.0  
+gunicorn
 postgres==4.0
 psycopg2-binary==2.9.9  
 psycopg2-pool==1.2
