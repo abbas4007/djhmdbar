@@ -32,8 +32,7 @@ pandas==2.2.3
 pillow==10.2.0  
 gunicorn
 postgres==4.0
-psycopg2
-psycopg2-binary==2.9.9  
+psycopg2-binary==2.9.10
 psycopg2-pool==1.2
 pyparsing==3.2.0
 python-bidi==0.6.3
